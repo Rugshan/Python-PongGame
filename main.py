@@ -31,6 +31,7 @@ while game_is_on:
     time.sleep(SLEEP)
     screen.update()
     ball.move()
+    ball.detect_wall_collision()
 
 
 
