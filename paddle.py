@@ -2,14 +2,11 @@ from turtle import Turtle
 
 WIDTH = 20
 HEIGHT = 100
-LEFT_X_POSITION = -350
-RIGHT_X_POSITION = 350
-CENTER_Y_POSITION = 0
 
 
 class Paddle(Turtle):
 
-    def __init__(self, player_number):
+    def __init__(self, position):
 
         # Create a turtle object from superclass.
         super().__init__()
@@ -24,10 +21,7 @@ class Paddle(Turtle):
         self.shapesize(stretch_len=(int(HEIGHT/20)), stretch_wid=(int(WIDTH/20)))
 
         # Set position of paddle given input argument.
-        if player_number == 1:
-            self.goto(LEFT_X_POSITION, CENTER_Y_POSITION)
-        elif player_number == 2:
-            self.goto(RIGHT_X_POSITION, CENTER_Y_POSITION)
+        self.goto(position)
 
     def move_up(self):
         self.goto(self.xcor(), self.ycor() + 20)
