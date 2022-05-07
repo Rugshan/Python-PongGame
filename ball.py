@@ -11,9 +11,10 @@ class Ball(Turtle):
         self.shape("circle")
         self.color("white")
         self.setheading(DEFAULT_HEADING)
+        self.move_amount = MOVE_AMOUNT
 
     def move(self):
-        self.forward(MOVE_AMOUNT)
+        self.forward(self.move_amount)
 
     def detect_wall_collision(self):
 
@@ -62,6 +63,8 @@ class Ball(Turtle):
                 new_heading = 360 - angle_of_reflection
                 self.setheading(new_heading)
 
+            return True
+
         # Check collision with right (player 2) paddle.
         elif self.distance(player_2) < 50 and self.xcor() > 320:
 
@@ -74,6 +77,10 @@ class Ball(Turtle):
                 angle_of_reflection = 180 - 90 - (360 - self.heading())
                 new_heading = 180 + angle_of_reflection
                 self.setheading(new_heading)
+
+            return True
+
+        return False
 
     def reset_position(self):
         self.goto(0, 0)
@@ -88,3 +95,10 @@ class Ball(Turtle):
         elif self.xcor() < -380:
             self.reset_position()
             return "LEFT"
+
+    def increase_speed(self):
+        self.move_amount += 0.3
+
+    def reset_speed(self):
+        self.move_amount = MOVE_AMOUNT
+

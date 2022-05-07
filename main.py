@@ -1,6 +1,7 @@
 from turtle import Turtle, Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 
 import time
 
@@ -18,6 +19,7 @@ player_1 = Paddle(PLAYER_1_POSITION)
 player_2 = Paddle(PLAYER_2_POSITION)
 ball = Ball()
 
+scoreboard = Scoreboard()
 
 screen.listen()
 screen.onkey(player_1.move_up, "w")
@@ -31,12 +33,20 @@ while game_is_on:
     time.sleep(SLEEP)
     screen.update()
     ball.move()
+
+    # Collisions & Speed
     ball.detect_wall_collision()
-    ball.detect_paddle_collision(player_1, player_2)
-    ball.detect_paddle_miss()
+    if ball.detect_paddle_collision(player_1, player_2):
+        ball.increase_speed()
 
+    # Miss/Score
+    miss = ball.detect_paddle_miss()
 
-
-
+    if miss == "LEFT":
+        scoreboard.increment_right_score()
+        ball.reset_speed()
+    elif miss == "RIGHT":
+        scoreboard.increment_left_score()
+        ball.reset_speed()
 
 screen.exitonclick()
