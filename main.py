@@ -32,6 +32,7 @@ while game_is_on:
     screen.update()
     ball.move()
     ball.detect_wall_collision()
+    ball.detect_paddle_collision(player_1, player_2)
 
 
 

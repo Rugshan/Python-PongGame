@@ -1,7 +1,7 @@
 from turtle import Turtle
 
-MOVE_AMOUNT = 2
-DEFAULT_HEADING = 85
+MOVE_AMOUNT = 3
+DEFAULT_HEADING = 65
 
 class Ball(Turtle):
 
@@ -18,7 +18,7 @@ class Ball(Turtle):
     def detect_wall_collision(self):
 
         # Check if ball has hit upper wall.
-        if self.ycor() > 300:
+        if self.ycor() > 280:
 
             # Check if ball is travelling right (upwards).
             if 0 <= self.heading() <= 90:
@@ -33,7 +33,7 @@ class Ball(Turtle):
                 self.setheading(new_heading)
 
         # Check if ball has hit lower wall.
-        elif self.ycor() < -300:
+        elif self.ycor() < -280:
 
             # Check if ball is travelling left (downwards).
             if 180 <= self.heading() <= 270:
@@ -45,4 +45,32 @@ class Ball(Turtle):
             elif 270 <= self.heading() <= 360:
                 angle_of_reflection = 180 - 90 - (360 - self.heading())
                 new_heading = 90 - angle_of_reflection
+                self.setheading(new_heading)
+
+    def detect_paddle_collision(self, player_1, player_2):
+
+        # Check collision with left (player 1) paddle.
+        if self.distance(player_1) < 50 and self.xcor() < -340:
+
+            if 90 <= self.heading() <= 180:
+                angle_of_reflection = 180 - 90 - (180 - self.heading())
+                new_heading = angle_of_reflection
+                self.setheading(new_heading)
+
+            elif 180 <= self.heading() <= 270:
+                angle_of_reflection = 180 - 90 - (self.heading() % 90)
+                new_heading = 360 - angle_of_reflection
+                self.setheading(new_heading)
+
+        # Check collision with right (player 2) paddle.
+        elif self.distance(player_2) < 50 and self.xcor() > 340:
+
+            if 0 <= self.heading() <= 90:
+                angle_of_reflection = 180 - 90 - self.heading()
+                new_heading = 180 - angle_of_reflection
+                self.setheading(new_heading)
+
+            elif 270 <= self.heading() <= 360:
+                angle_of_reflection = 180 - 90 - (360 - self.heading())
+                new_heading = 180 + angle_of_reflection
                 self.setheading(new_heading)
